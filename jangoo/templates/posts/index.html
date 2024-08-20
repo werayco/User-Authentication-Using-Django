@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the homepage</title>
+</head>
+<body>
+    <header>
+        {% if user.is_authenticated %}
+        <a href="{% url 'homepage' %}"> Home</a>
+        <a href="{% url 'logout' %}"> Log Out!</a>
+        
+        {% else %}
+        <h1>SIGN UP TODAY</h1>
+        <a href="{% url 'homepage' %}"> Home</a>
+        <a href="{% url 'sign' %}"> Sign Up!</a>
+        <a href="{% url 'login' %}"> Login!</a>
+        {% endif %}
+    </header>
+
+    {% if user.is_authenticated %}
+    <h1>Welcome, {{user.username}}</h1>
+    <h2>Below are the data we have in our custom model, Post</h2>
+    {% endif %}
+
+ 
+    {% if user.is_authenticated %}
+    {% for data in content %}
+        <ul>
+            <li>
+                <a href={{data.get_absolute_url}}> {{data.name}},is record in the Posts database </a>
+            </li>
+        </ul>
+    {% endfor %}
+    {% endif %}
+
+    {% block 'contents' %}
+    {% endblock 'contents' %}
+</body>
+</html>
